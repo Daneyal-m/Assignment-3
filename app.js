@@ -16,9 +16,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
 app.use('/fontawesome', express.static(path.join(__dirname, 'node_modules/@fortawesome/fontawesome-free')));
 
-app.get ('/', (req, res) => {
-    res.send('Hello World');
+app.get('/', (req, res) => {
+  res.render('index');
 });
+app.use('/tasks', require('./routes/tasks'));
+
 const PORT = process.env.PORT || 3000;
 connectDB().then(() => {
     app.listen(PORT, () => {
