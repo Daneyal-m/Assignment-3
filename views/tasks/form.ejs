@@ -1,0 +1,68 @@
+<%- include('../partials/header', { title }) %>
+
+<h1 class="h2 mb-3"><%= title %></h1>
+
+<% if (errors.length) { %>
+  <div class="alert alert-danger">
+    <ul class="mb-0">
+      <% errors.forEach(e => { %><li><%= e %></li><% }) %>
+    </ul>
+  </div>
+<% } %>
+
+<form method="post" action="/tasks">
+  <div class="mb-3">
+    <label for="title" class="form-label">Title</label>
+    <input class="form-control" id="title" name="title" required value="<%= task.title || '' %>">
+  </div>
+
+  <div class="row g-3 mb-3">
+    <div class="col-md-6">
+      <label for="course" class="form-label">Course</label>
+      <input class="form-control" id="course" name="course" required value="<%= task.course || '' %>">
+    </div>
+    <div class="col-md-6">
+      <label for="dueDate" class="form-label">Due date</label>
+      <input class="form-control" type="date" id="dueDate" name="dueDate" required value="<%= task.dueDate || '' %>">
+    </div>
+  </div>
+
+  <div class="row g-3 mb-3">
+    <div class="col-md-4">
+      <label for="type" class="form-label">Type</label>
+      <select class="form-select" id="type" name="type">
+        <% ['Assignment', 'Exam', 'Quiz', 'Project', 'Lab', 'Other'].forEach(t => { %>
+          <option <%= (task.type || 'Assignment') === t ? 'selected' : '' %>><%= t %></option>
+        <% }) %>
+      </select>
+    </div>
+    
+    <div class="col-md-4">
+      <label for="priority" class="form-label">Priority</label>
+      <select class="form-select" id="priority" name="priority">
+        <% ['Low', 'Medium', 'High'].forEach(p => { %>
+          <option <%= (task.priority || 'Medium') === p ? 'selected' : '' %>><%= p %></option>
+        <% }) %>
+      </select>
+    </div>
+   
+    <div class="col-md-4">
+      <label for="status" class="form-label">Status</label>
+      <select class="form-select" id="status" name="status">
+        <% ['Not started', 'In progress', 'Done'].forEach(s => { %>
+          <option <%= (task.status || 'Not started') === s ? 'selected' : '' %>><%= s %></option>
+        <% }) %>
+      </select>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="notes" class="form-label">Notes (optional)</label>
+    <textarea class="form-control" id="notes" name="notes" rows="3"><%= task.notes || '' %></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Add item</button>
+  <a href="/tasks" class="btn btn-outline-secondary">Cancel</a>
+</form>
+
+<%- include('../partials/footer') %>
