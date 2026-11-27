@@ -4,6 +4,7 @@ const path = require('path');
 const express = require('express');
 
 const connectDB = require('./config/db');
+const methodOverride = require('method-override');
 
 const app = express();
 
@@ -11,14 +12,15 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.urlencoded({ extended:false }));
+app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
 app.use('/fontawesome', express.static(path.join(__dirname, 'node_modules/@fortawesome/fontawesome-free')));
 
-app.get('/', (req, res) => {
-  res.render('index');
-});
+const taskController = require('./controllers/taskController');
+app.get('/', taskController.home);
+
 app.use('/tasks', require('./routes/tasks'));
 
 const PORT = process.env.PORT || 3000;

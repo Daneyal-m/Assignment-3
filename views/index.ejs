@@ -1,6 +1,45 @@
 <%- include('partials/header', { title: 'Home' }) %>
 
-<h1>Welcome</h1>
-<p>The header and footer are working.</p>
+<section class="py-4">
+  <h1 class="display-5">Assignment Tracker</h1>
+  <p class="lead">Keep track of your upcoming assignments, exams and quizzes in one place.</p>
+  <a href="/tasks/new" class="btn btn-primary btn-lg">
+    <i class="fa-solid fa-plus"></i> Add item
+  </a>
+  <a href="/tasks" class="btn btn-outline-secondary btn-lg">View all items</a>
+</section>
+
+<section class="mt-4">
+  <h2 class="h4 mb-3">Your work</h2>
+
+  <% if (tasks.length === 0) { %>
+    <div class="alert alert-info">Nothing here yet. Add your first item.</div>
+  <% } else { %>
+    <table class="table table-striped align-middle">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Course</th>
+          <th>Type</th>
+          <th>Due</th>
+          <th>Priority</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% tasks.forEach(t => { %>
+          <tr>
+            <td><%= t.title %></td>
+            <td><%= t.course %></td>
+            <td><%= t.type %></td>
+            <td><%= new Date(t.dueDate).toLocaleDateString('en-CA', { timeZone: 'UTC' }) %></td>
+            <td><%= t.priority %></td>
+            <td><%= t.status %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+</section>
 
 <%- include('partials/footer') %>

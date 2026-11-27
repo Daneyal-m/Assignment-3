@@ -10,7 +10,7 @@
   </div>
 <% } %>
 
-<form method="post" action="/tasks">
+<form method="post" action="<%= editing ? '/tasks/' + task._id + '?_method=PUT' : '/tasks' %>">
   <div class="mb-3">
     <label for="title" class="form-label">Title</label>
     <input class="form-control" id="title" name="title" required value="<%= task.title || '' %>">
@@ -23,7 +23,7 @@
     </div>
     <div class="col-md-6">
       <label for="dueDate" class="form-label">Due date</label>
-      <input class="form-control" type="date" id="dueDate" name="dueDate" required value="<%= task.dueDate || '' %>">
+      <input class="form-control" type="date" id="dueDate" name="dueDate" required value="<%= dueValue %>">
     </div>
   </div>
 
@@ -61,7 +61,7 @@
     <textarea class="form-control" id="notes" name="notes" rows="3"><%= task.notes || '' %></textarea>
   </div>
 
-  <button type="submit" class="btn btn-primary">Add item</button>
+  <button type="submit" class="btn btn-primary"><%= editing ? 'Save changes' : 'Add item' %></button>
   <a href="/tasks" class="btn btn-outline-secondary">Cancel</a>
 </form>
 
